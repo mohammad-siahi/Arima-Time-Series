@@ -1,2 +1,3 @@
 # ARIMA Time Series Analysis - ENEL.MI
-# See enel_arima.Rmd for full analysis
+# Main report: enel_arima.Rmd
+# HTML output: enel_arima.html
