@@ -1,0 +1,112 @@
+---
+title: "ARIMA Time Series Analysis"
+output: html_document
+date: "2026-02-27"
+---
+
+## 1. Load Libraries
+
+```{r}
+library(quantmod)
+library(forecast)
+library(tseries)
+```
+
+---
+
+## 2. Download Data from Yahoo Finance
+
+```{r}
+ticker <- "ENEL.MI"
+
+data <- getSymbols(ticker, src="yahoo", auto.assign=FALSE)
+
+price <- data[,6]
+
+head(price)
+```
+
+---
+
+## 3. Compute Monthly Log Returns
+
+```{r}
+monthly_price <- to.monthly(price, indexAt="lastof", drop.time=TRUE)
+monthly_close <- monthly_price[,4]
+
+returns <- diff(log(monthly_close)) * 100
+returns <- na.omit(returns)
+
+head(returns)
+
+y <- ts(as.numeric(returns), frequency=12)
+```
+
+---
+
+## 4. Plot Monthly Returns
+
+```{r}
+plot(y, main="Monthly Log Returns", ylab="Return (%)")
+```
+
+---
+
+## 5. Descriptive Statistics
+
+```{r}
+mean(y)
+sd(y)
+var(y)
+```
+
+---
+
+## 6. T-Test for Zero Mean
+
+```{r}
+t.test(y)
+```
+
+---
+
+## 7. Stationarity Test (ADF Test)
+
+```{r}
+adf.test(y)
+```
+
+---
+
+## 8. Fit ARIMA Model
+
+```{r}
+fit <- auto.arima(y, seasonal=FALSE)
+summary(fit)
+```
+
+---
+
+## 9. Residual Diagnostics
+
+```{r}
+checkresiduals(fit)
+```
+
+---
+
+## 10. Forecast 12 Months Ahead
+
+```{r}
+fc <- forecast(fit, h=12)
+
+plot(fc, main="ARIMA Forecast")
+```
+
+---
+
+## 11. Forecast Accuracy
+
+```{r}
+accuracy(fc)
+```
