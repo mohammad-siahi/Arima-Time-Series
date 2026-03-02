@@ -1,31 +1,47 @@
 # ARIMA Time Series Analysis – ENEL.MI
 
-This project applies ARIMA modeling to monthly log returns of ENEL (ENEL.MI) stock using Yahoo Finance data.
-
-## Method
-- Convert daily prices to monthly data  
-- Compute log returns (%)  
-- Test stationarity (ADF test)  
-- Fit ARIMA model using `auto.arima()`  
-- Perform residual diagnostics  
-- Forecast 12 months ahead  
-
-## Result
-Selected model: **ARIMA(0,0,0) with mean**  
-Monthly returns behave approximately as white noise with a constant mean.
-
-Note: The model forecasts **returns**, not prices.
+This project applies ARIMA modeling to monthly log returns of ENEL (ENEL.MI) stock using data from Yahoo Finance.
 
 ---
 
-## How to Run
+## 🔗 Live Report
 
-1. Install R and RStudio (if not already installed).
+👉 https://mohammad-siahi.github.io/Arima-Time-Series/
 
-2. Download or clone this repository.
+The full rendered analysis (including outputs and plots) is available at the link above.
 
-3. Open the file `enel_arima.Rmd` in RStudio.
+---
 
-4. Click the **Knit** button (top of the editor) and choose **Knit to HTML**.
+## Methodology
 
-The analysis will run automatically and generate the HTML report.
+- Conversion of daily prices to monthly data  
+- Computation of log returns (%)  
+- Augmented Dickey–Fuller (ADF) stationarity test  
+- ARIMA model selection using `auto.arima()`  
+- Residual diagnostics (Ljung–Box test)  
+- 12-month ahead forecast  
+
+The selected model for monthly returns is:
+
+**ARIMA(0,0,0) with non-zero mean**
+
+This suggests that monthly returns behave approximately as white noise with a constant mean.
+
+---
+
+## Project Structure
+
+- `Analysis.R` → Full R script  
+- `index.html` → Rendered HTML report (GitHub Pages)  
+- `README.md` → Project documentation  
+
+---
+
+## How to Run Locally
+
+Open `Analysis.R` in RStudio and run the script.
+
+Required packages:
+
+```r
+install.packages(c("quantmod","forecast","tseries"))
